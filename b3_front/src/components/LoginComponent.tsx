@@ -40,10 +40,7 @@ export default function LoginPage() {
   });
 
   async function login(token: string) {
-    if (!checkAge()) {
-      setAgeDialog(true);
-      return;
-    }
+    
     cookies.set("jwt_authorization", token);
     navigate("/Chat");
   }
@@ -211,7 +208,7 @@ export default function LoginPage() {
               onChange={(e) => setSenhaCadastro(e.target.value)}
             />
             <button onClick={() => PostUsuario(emailCadastro, senhaCadastro)} className={`
-              w-full bg-gradient-to-r from-blue-500 to-blue-800 hover:bg-black
+              w-full bg-blue-800 hover:bg-black
               hover:text-slate-300
               text-white rounded-lg px-4 py-3 mt-6
             `}>
@@ -247,7 +244,7 @@ export default function LoginPage() {
               onChange={(e) => setSenhaLogin(e.target.value)}
             />
             <button onClick={() => login("ok")} className={`
-              w-full bg-gradient-to-r from-blue-500 to-blue-800 hover:bg-black
+              w-full bg-blue-800 hover:bg-black
               hover:text-slate-300
               text-white rounded-lg px-4 py-3 mt-6
             `}>
