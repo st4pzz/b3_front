@@ -9,6 +9,8 @@ import {
 import './index.css'
 import LoginComponent from './components/LoginComponent.tsx';
 import ChatPage from './pages/ChatPage.tsx';
+import QuizPerguntasPage from './pages/QuizPerguntasPage.tsx';
+import QuizIniciarPage from './pages/QuizIniciarPage.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -21,9 +23,18 @@ const router = createBrowserRouter([
     
   },
   {
-    path: "Chat",
+    path: "chat",
     element: <ChatPage/>,
-  }
+  },
+  {
+    path : "quiz/perguntas",
+    element: <QuizPerguntasPage/>
+  },
+  {
+    path : "quiz/iniciar",
+    element: <QuizIniciarPage/>
+  },
+  
  
 ]);
 

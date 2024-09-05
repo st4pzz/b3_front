@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import dayjs, { Dayjs } from 'dayjs';
@@ -28,7 +27,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [ageDialog, setAgeDialog] = useState(false);
 
-
   const [formData, setFormData] = useState<FormData>({
     email: '',
     nome: '',
@@ -40,7 +38,6 @@ export default function LoginPage() {
   });
 
   async function login(token: string) {
-    
     cookies.set("jwt_authorization", token);
     navigate("/Chat");
   }
@@ -116,148 +113,56 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="hidden md:block md:w-1/2 lg:w-2/3">
-        <img 
-          src="../../public/b3.png"
-          alt="Imagem da Corretora"
-          className="h-screen w-full object-cover" />
-      </div>
-      <div className="flex flex-col gap-6  m-10 w-full md:w-1/2 lg:w-1/3">
-        {isCadastro ? (
-          <>
-          <Dialog open={passwordMismatchDialog} onClose={() => setPasswordMismatchDialog(false)}>
-        <DialogTitle>Acesso Restrito</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            As senhas informadas não coincidem.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setAgeDialog(false)} color="primary">
-            Fechar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={ageDialog} onClose={() => setAgeDialog(false)}>
-        <DialogTitle>Acesso Restrito</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Desculpe, mas você deve ter pelo menos 18 anos para se registrar.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setAgeDialog(false)} color="primary">
-            Fechar
-          </Button>
-        </DialogActions>
-      </Dialog>
-            
-            {error ? <p className="text-red-400">{error}</p> : null}
-            <TextField
-        required
-        id="nome"
-        label="nome"
-        name="nome"
-        fullWidth
-        value={formData.nome}
-        onChange={handleChange}
-      />
-            <TextField
-        required
-        id="email"
-        label="Email"
-        name="email"
-        fullWidth
-        value={formData.email}
-        onChange={handleChange}
-      />
-            <TextField
-        
-              value={formData.cpf}
-              onChange={handleCPFChange}
-              variant="outlined"
-              label="CPF"
-              fullWidth
-            />
-            <TextField
-        
-        value={formData.phone}
-        onChange={handlePhoneChange}
-        variant="outlined"
-        label="Telefone"
-        fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">+55</InputAdornment>
-          )
-        }}
-      />
-            <TextField
-              required
-              label="Senha"
-              type="password"
-              value={senhaCadastro}
-              onChange={(e) => setSenhaCadastro(e.target.value)}
-            />
-            <TextField
-              required
-              label="Confirmar senha"
-              type="password"
-              value={senhaCadastro}
-              onChange={(e) => setSenhaCadastro(e.target.value)}
-            />
-            <button onClick={() => PostUsuario(emailCadastro, senhaCadastro)} className={`
-              w-full bg-blue-800 hover:bg-black
-              hover:text-slate-300
-              text-white rounded-lg px-4 py-3 mt-6
-            `}>
-              Cadastrar
-            </button>
-            <button onClick={() => setIsCadastro(false)} className={`
-              w-full bg-gray-500 hover:bg-gray-700
-              text-white rounded-lg px-4 py-3 mt-4
-            `}>
-              Já tem uma conta? Faça login
-            </button>
-          </>
-        ) : (
-          <>
-          
+    <div className="flex h-screen items-center justify-center bg-azul-b3-claro">
+      <div className="flex w-full max-w-md bg-azul-form shadow-lg rounded-lg p-6">
+        <div className="w-full">
+        <div className=" flex justify-center">
+    <p className="text-4xl text-gray-200 font-mono">[B]</p>
+    <div className="flex flex-col h-full justify-start">
+      <p className="text-sm text-gray-200 font-mono">3</p>
+    </div>
+  </div>
+          {isCadastro ? (
+            <>
+              <h2 className="text-center text-2xl font-bold mb-6 text-neutral-300">Cadastro</h2>
+              {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
+             
+            </>
+          ) : (
+            <>
+              <h2 className="text-center text-2xl font-semibold mb-6 text-neutral-300">BEM-VINDO DE VOLTA</h2>
+              <h3 className="text-center text-base font-normal mb-6 text-neutral-300">Para acessar sua conta, entre com as informações abaixo</h3>
+              {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
+              <div className="flex gap-4 mx-20 flex-col">  
+                <div className="flex flex-col">
 
-            <h1 className={`text-3xl flex justify-center text-blue-600 font-bold mb-5`}>
-              Entre com a Sua Conta
-            </h1>
-            {error ? <p className="text-red-400">{error}</p> : null}
-            <TextField
-              required
-              label="Email"
-              type="email"
-              value={emailLogin}
-              onChange={(e) => setEmailLogin(e.target.value)}
-            />
-            <TextField
-              required
-              label="Senha"
-              type="password"
-              value={senhaLogin}
-              onChange={(e) => setSenhaLogin(e.target.value)}
-            />
-            <button onClick={() => login("ok")} className={`
-              w-full bg-blue-800 hover:bg-black
-              hover:text-slate-300
-              text-white rounded-lg px-4 py-3 mt-6
-            `}>
-              Entrar
-            </button>
-            <button onClick={() => setIsCadastro(true)} className={`
-              w-full bg-gray-500 hover:bg-gray-700
-              text-white rounded-lg px-4 py-3 mt-4
-            `}>
-              Não tem uma conta? Cadastre-se
-            </button>
-          </>
-        )}
+              <h3 className="text-neutral-300 text-base font-normal">Email</h3>
+              <input type="text" placeholder="abc@example.com" required  className="rounded-md pl-2  focus:border-transparent focus:outline-none py-1"/>
+              </div>
+              <div className="flex flex-col">
+              <h3 className="text-neutral-300 text-base font-normal">Senha</h3>
+              <input type="password" required  className="rounded-md pl-2 focus:border-transparent focus:outline-none py-1"/>
+              </div>
+              <button className="bg-amarelo-b3 py-1 rounded-md mt-6">
+                Login
+              </button>
+              <div className="flex flex-row justify-center items-center gap-3">
+
+              <img src="/Search social.png" className="w-6 h-6 "/>
+
+              <button className="text-neutral-300 hover:text-amarelo-b3 text-base font-normal">Sign in with Google</button>
+              </div>
+              <div className="flex flex-row gap-4">
+              <h3 className="text-neutral-300 text-base font-normal">Ainda não tem uma conta?</h3>
+              <button className="text-amarelo-b3 hover:text-gray-400">
+                Sign Up for free
+              </button>
+
+              </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

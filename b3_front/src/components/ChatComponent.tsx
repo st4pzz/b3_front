@@ -1,19 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Message {
-    role: 'user' | 'assistant';
-    content: string;
+  role: 'user' | 'assistant';
+  content: string;
 }
 
-
-
 export default function ChatComponent() {
-
-    const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const [showQuestions, setShowQuestions] = useState<boolean>(true);
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -23,9 +22,10 @@ export default function ChatComponent() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = async (): Promise<void> => {
-    if (!input.trim()) return;
-    const newUserMessage: Message = { role: 'user', content: input.trim() };
+  const handleSendMessage = async (messageContent: string): Promise<void> => {
+    setShowQuestions(false);
+    if (!messageContent.trim()) return;
+    const newUserMessage: Message = { role: 'user', content: messageContent.trim() };
     setMessages([...messages, newUserMessage]);
     setInput('');
     setIsLoading(true);
@@ -64,46 +64,74 @@ export default function ChatComponent() {
     }
   };
 
+  const startChat = (initialMessage?: string): void => {
+    setShowQuestions(false);
+    if (initialMessage) {
+      handleSendMessage(initialMessage);
+    }
+  };
+
   return (
-    <div className="flex flex-col w-full h-full p-5 bg-gray-100 rounded-lg shadow-md">
-      <div className="flex-1 overflow-y-auto mb-3">
-      {messages.map((msg, index) => (
-    <div
-      key={index}
-      className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-    >
-      <p
-        className={`p-3 rounded-xl max-w-[80%] ${
-          msg.role === 'user' ? 'bg-blue-300 text-black self-end' : 'bg-gray-300 text-black self-start'
-        }`}
-      >
-        {msg.content}
-      </p>
-    </div>
-  ))}
-        {isTyping && (
-          <p className="mb-2 bg-purple-200 rounded-lg p-2 animate-pulse">Digitando...</p>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
-      <div className="flex items-center border-t border-gray-300 pt-2">
-        <input
-          className="flex-1 p-2 border border-gray-300 rounded-md mr-2"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-        />
-        <button
-          onClick={handleSendMessage}
-          disabled={isLoading}
-          className={`px-4 py-2 rounded-md text-white ${
-            isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
-          }`}
-        >
-          {isLoading ? 'Enviando...' : 'Enviar'}
-        </button>
-      </div>
+    <div className="flex flex-col w-full h-full p-5 bg-azul-b3-claro rounded-lg shadow-md">
+      {showQuestions && (
+        <div>
+        <div className='flex justify-end items-center'>
+            <Link to="/quiz/iniciar">
+              <button className='text-pretty text-base border rounded-xl p-2 bg-yellow-300 text-slate-700'>
+                Clique aqui para testar seus conhecimentos
+              </button>
+            </Link>
+          </div>
+          <div className="flex flex-col h-full gap-10 justify-center items-center">
+          <p className='max-w-80 text-base text-neutral-200'>
+            Olá! Sou um Chat Inteligência Artificial treinado pela B3, estou aqui para lhe ajudar com dúvidas sobre Educação Financeira. Exemplos de perguntas que você pode fazer:
+          </p>
+          <button onClick={() => startChat('O que são ações?')}>
+            <p className='border bg-white rounded-md text-neutral-600 p-2 w-96 text-center'>O QUE SÃO AÇÕES?</p>
+          </button>
+          <button onClick={() => startChat('Como diversificar em fundos imobiliários?')}>
+            <p className='border bg-white rounded-md text-neutral-600 p-2 w-96 text-center'>COMO DIVERSIFICAR EM FUNDOS IMOBILIÁRIOS?</p>
+          </button>
+          <button onClick={() => startChat('Como economizar para investir?')}>
+            <p className='border bg-white rounded-md text-neutral-600 p-2 w-96 text-center'>COMO ECONOMIZAR PARA INVESTIR?</p>
+          </button>
+        </div>
+        </div>
+      )}
+      {!showQuestions && (
+        <div className="flex flex-col flex-1">
+          <div className="flex-1 overflow-y-auto">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <p
+                  className={`p-3 rounded-xl max-w-[80%] ${
+                    msg.role === 'user' ? 'bg-blue-300 text-white self-end' : 'bg-gray-300 text-white self-start'
+                  }`}
+                >
+                  {msg.content}
+                </p>
+              </div>
+            ))}
+            {isTyping && (
+              <p className="mb-2 bg-purple-200 rounded-lg p-2 animate-pulse">Digitando...</p>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+          
+        </div>
+      )}
+      <div className="fixed bottom-4 left-1/2  p-2 transform -translate-x-1/2 w-2/3 border-gray-300 bg-white rounded-md">
+            <input
+              className="w-full p-2  border-gray-300 focus:border-transparent focus:outline-none rounded-md"
+              placeholder="Digite a sua pergunta aqui..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(input)}
+            />
+          </div>
     </div>
   );
-
 }
