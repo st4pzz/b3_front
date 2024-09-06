@@ -26,6 +26,7 @@ export default function LoginPage() {
   const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs());
   const navigate = useNavigate();
   const [ageDialog, setAgeDialog] = useState(false);
+  const [LembrarCheckBox, setLembrarCheckBox] = useState(false);
 
   const [formData, setFormData] = useState<FormData>({
     email: '',
@@ -114,7 +115,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen items-center justify-center bg-azul-b3-claro">
-      <div className="flex w-full max-w-md bg-azul-form shadow-lg rounded-lg p-6">
+      <div className="flex w-full max-w-md bg-azul-form shadow-lg rounded-lg p-6 min-h-[712px]">
         <div className="w-full">
         <div className=" flex justify-center">
     <p className="text-4xl text-gray-200 font-mono">[B]</p>
@@ -124,7 +125,59 @@ export default function LoginPage() {
   </div>
           {isCadastro ? (
             <>
-              <h2 className="text-center text-2xl font-bold mb-6 text-neutral-300">Cadastro</h2>
+            <h2 className="text-center text-2xl font-semibold mb-6 text-neutral-300">BEM-VINDO</h2>
+            <h3 className="text-center text-base font-normal mb-6 text-neutral-300">Bem Vindo ao Chat da B3</h3>
+            <div className="flex flex-row justify-center items-center gap-3">
+
+              <img src="/Search social.png" className="w-6 h-6 "/>
+
+              <button className="text-neutral-300 hover:text-amarelo-b3 text-base font-normal">Continue with Google</button>
+              </div>
+              <div className="flex flex-row my-5 items-center gap-2 justify-center">
+                <div className="w-24 h-px border-t-2"></div>
+                <p className="text-neutral-300 text-base font-normal">OU</p>
+                <div className="w-24 h-px border-t-2"></div>
+
+              </div>
+              <div className="flex flex-col gap-2 mx-8 ">
+              <div className="flex flex-col gap-1">
+              <h3 className="text-neutral-300 text-base font-normal ">Nome</h3>
+              <input type="text" placeholder="Nome" required  className="rounded-lg pl-2  focus:border-transparent focus:outline-none py-2"/>
+              </div>
+              <div className="flex flex-col gap-1">
+              <h3 className="text-neutral-300 text-base font-normal">Email</h3>
+              <input type="text" placeholder="Email" required  className="rounded-lg pl-2  focus:border-transparent focus:outline-none py-2"/>
+              </div>
+              <div className="flex flex-col gap-1">
+              <h3 className="text-neutral-300 text-base font-normal ">Senha</h3>
+              <input type="password" required  className="rounded-lg pl-2 focus:border-transparent focus:outline-none py-2"/>
+              </div>
+              <div className="flex flex-col gap-1">
+              <h3 className="text-neutral-300 text-base font-normal">Confirme sua senha</h3>
+              <input type="password" required  className="rounded-lg pl-2 focus:border-transparent focus:outline-none py-2"/>
+              </div>
+              <div className="flex flex-row items-center gap-2">
+                <button onClick={
+                  () => {
+                    setLembrarCheckBox(!LembrarCheckBox)
+                  }
+                } 
+
+                className={!LembrarCheckBox ? "border rounded bg-transparent border-white w-4 h-4" : "border rounded bg-amarelo-b3 border-white w-4 h-4"}></button>
+                <p className="text-neutral-300 text-base font-normal">Lembrar-me</p>
+
+              </div>
+              <button className="bg-amarelo-b3 py-2 rounded-md mt-6">
+                Sign Up
+              </button>
+              <div className="flex flex-row gap-2 justify-center">
+              <h3 className="text-neutral-300 text-base font-normal">Já tem uma conta?</h3>
+              <button onClick={() => setIsCadastro(false)} className="text-amarelo-b3 hover:text-gray-400">
+                Login
+              </button>
+              </div>
+              </div>
+
               {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
              
             </>
@@ -133,19 +186,25 @@ export default function LoginPage() {
               <h2 className="text-center text-2xl font-semibold mb-6 text-neutral-300">BEM-VINDO DE VOLTA</h2>
               <h3 className="text-center text-base font-normal mb-6 text-neutral-300">Para acessar sua conta, entre com as informações abaixo</h3>
               {error && <p className="text-red-400 mb-4 text-center">{error}</p>}
-              <div className="flex gap-4 mx-20 flex-col">  
-                <div className="flex flex-col">
+              <div className="flex  mx-8 h-3/4 justify-around flex-col">  
+                <div className="flex flex-col gap-1">
 
               <h3 className="text-neutral-300 text-base font-normal">Email</h3>
-              <input type="text" placeholder="abc@example.com" required  className="rounded-md pl-2  focus:border-transparent focus:outline-none py-1"/>
+              <input type="text" placeholder="abc@example.com" required  className="rounded-md pl-2  focus:border-transparent focus:outline-none py-2"/>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-1">
               <h3 className="text-neutral-300 text-base font-normal">Senha</h3>
-              <input type="password" required  className="rounded-md pl-2 focus:border-transparent focus:outline-none py-1"/>
+              <input type="password" required  className="rounded-md pl-2 focus:border-transparent focus:outline-none py-2"/>
               </div>
-              <button className="bg-amarelo-b3 py-1 rounded-md mt-6">
+              <button className="bg-amarelo-b3 py-2 rounded-md mt-6">
                 Login
               </button>
+              <div className="flex flex-row my-5 items-center gap-2 justify-center">
+                <div className="w-24 h-px border-t-2"></div>
+                <p className="text-neutral-300 text-base font-normal">OU</p>
+                <div className="w-24 h-px border-t-2"></div>
+
+              </div>
               <div className="flex flex-row justify-center items-center gap-3">
 
               <img src="/Search social.png" className="w-6 h-6 "/>
@@ -154,7 +213,7 @@ export default function LoginPage() {
               </div>
               <div className="flex flex-row gap-4">
               <h3 className="text-neutral-300 text-base font-normal">Ainda não tem uma conta?</h3>
-              <button className="text-amarelo-b3 hover:text-gray-400">
+              <button onClick={() => setIsCadastro(true)} className="text-amarelo-b3 hover:text-gray-400">
                 Sign Up for free
               </button>
 
