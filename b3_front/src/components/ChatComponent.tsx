@@ -72,7 +72,7 @@ export default function ChatComponent() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-5 bg-azul-b3-claro rounded-lg shadow-md">
+    <div className="flex flex-col w-full h-full p-5 bg-azul-b3-claro shadow-md">
       {showQuestions && (
         <div>
         <div className='flex justify-end items-center'>

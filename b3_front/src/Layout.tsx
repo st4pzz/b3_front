@@ -1,5 +1,7 @@
 import Autenticacao from "./auth/autenticacao";
-import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie';
+
 
 type LayoutProps = {
     texto: string | null;
@@ -7,30 +9,51 @@ type LayoutProps = {
 };
 
 export default function Layout(props: LayoutProps) {
-    return (
-        <Autenticacao>
-            <div className="flex flex-col w-screen h-screen bg-black overflow-hidden">
-            <div className="flex flex-row px-6 justify-start items-center h-16 bg-azul-b3 relative">
-  <div className="flex items-center h-full">
-    <button>
-    <MenuIcon fontSize="large" sx={{color:'white'}}  />
-    </button>
-  </div>
-  <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center">
-    <p className="text-4xl text-gray-200 font-mono">[B]</p>
-    <div className="flex flex-col h-full justify-start">
-      <p className="text-sm text-gray-200 font-mono">3</p>
-    </div>
-  </div>
-</div>
 
-              
+  const navigate = useNavigate();
 
-                {/* Ajusta o div abaixo para usar flex-grow */}
-                <div className="flex-grow flex justify-center">
-                    {props.children}
-                </div>
+  const cookies = new Cookies();
+
+  const logout = () => {
+    cookies.remove('jwt_authorization');
+    navigate("/");
+    
+  }
+
+
+
+  return (
+    <Autenticacao>
+      <div className="flex flex-col w-screen h-screen overflow-hidden">
+        {/* Top Bar */}
+        <div className="flex flex-row justify-around items-center h-16 bg-azul-b3 ">
+          <div className="flex  flex-grow space-x-4 justify-around  flex-row items-center">
+            <button onClick={()=>navigate("/quiz/iniciar")} className="hover:text-amarelo-b3 text-white">
+              Quiz
+            </button>
+            <button onClick={()=>navigate("/chat")}  className="hover:text-amarelo-b3 text-white">
+              Chat
+            </button>
+          </div>
+          
+          <div className="flex items-center h-full justify-center">
+            <p className="text-4xl p-0 m-0 text-gray-200 font-mono">[B]</p>
+            <div className="flex mt-4 flex-col h-full justify-start">
+              <p className="text-sm text-gray-200 font-mono">3</p>
             </div>
-        </Autenticacao>
-    );
+          </div>
+          <div className="flex  flex-row items-center flex-grow justify-around space-x-4">
+            <button className="hover:text-amarelo-b3 text-white">
+              Dúvidas
+            </button>
+            <button onClick={()=>logout()}  className="hover:text-amarelo-b3 text-white">
+              Logout
+            </button>
+          </div>
+          
+        </div>
+        <div className="flex-grow flex justify-center">{props.children}</div>
+      </div>
+    </Autenticacao>
+  );
 }

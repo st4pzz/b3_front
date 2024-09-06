@@ -40,7 +40,7 @@ export default function LoginPage() {
 
   async function login(token: string) {
     cookies.set("jwt_authorization", token);
-    navigate("/Chat");
+    navigate("/chat");
   }
 
   async function PostUsuario(email: string, senha: string) {
@@ -196,7 +196,7 @@ export default function LoginPage() {
               <h3 className="text-neutral-300 text-base font-normal">Senha</h3>
               <input type="password" required  className="rounded-md pl-2 focus:border-transparent focus:outline-none py-2"/>
               </div>
-              <button className="bg-amarelo-b3 py-2 rounded-md mt-6">
+              <button onClick={() => login("oi")} className="bg-amarelo-b3 py-2 rounded-md mt-6">
                 Login
               </button>
               <div className="flex flex-row my-5 items-center gap-2 justify-center">

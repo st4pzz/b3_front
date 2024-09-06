@@ -1,7 +1,7 @@
 export default function QuizPerguntasComponent(){
     return (
         <div className="flex h-full w-full justify-center bg-azul-b3-claro items-center">
-            <div className="flex border bg-white rounded w-2/3 h-3/4">
+            <div className="flex border justify-center  bg-white rounded w-2/3 h-3/4">
                 <div className="flex flex-col h-full justify-around items-center">
 
                     <div className="mx-52">
