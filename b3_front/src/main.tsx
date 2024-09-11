@@ -11,6 +11,7 @@ import LoginComponent from './components/LoginComponent.tsx';
 import ChatPage from './pages/ChatPage.tsx';
 import QuizPerguntasPage from './pages/QuizPerguntasPage.tsx';
 import QuizIniciarPage from './pages/QuizIniciarPage.tsx';
+import LandingPage from './pages/LandingPage.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -19,6 +20,11 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LandingPage />,
+
+  },
+  {
+    path: "/login",
     element: <LoginComponent />,
     
   },

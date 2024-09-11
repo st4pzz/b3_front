@@ -8,7 +8,8 @@ export default {
         'azul-b3-claro': '#194172',
         'cinza-b3': '#00000040',
         'amarelo-b3': '#FFE8A1',
-        'azul-form' : '#001B74'
+        'azul-form' : '#001B74',
+        'amarelo-landing': '#F5AA1E',
       },
     },
   },

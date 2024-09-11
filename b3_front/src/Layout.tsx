@@ -1,6 +1,7 @@
 import Autenticacao from "./auth/autenticacao";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import LogoB3 from "./components/LogoB3";
 
 
 type LayoutProps = {
@@ -36,12 +37,7 @@ export default function Layout(props: LayoutProps) {
             </button>
           </div>
           
-          <div className="flex items-center h-full justify-center">
-            <p className="text-4xl p-0 m-0 text-gray-200 font-mono">[B]</p>
-            <div className="flex mt-4 flex-col h-full justify-start">
-              <p className="text-sm text-gray-200 font-mono">3</p>
-            </div>
-          </div>
+          <LogoB3 />
           <div className="flex  flex-row items-center flex-grow justify-around space-x-4">
             <button className="hover:text-amarelo-b3 text-white">
               Dúvidas
