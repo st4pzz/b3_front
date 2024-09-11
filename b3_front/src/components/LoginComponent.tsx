@@ -114,7 +114,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-azul-b3-claro">
+    <div className="flex h-screen items-center justify-center bg-azul-b3 opacity-80">
       <div className="flex w-full max-w-md bg-azul-form shadow-lg rounded-lg p-6 min-h-[712px]">
         <div className="w-full">
         <div className=" flex justify-center">
