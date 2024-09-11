@@ -1,6 +1,6 @@
 export default function QuizPerguntasComponent(){
     return (
-        <div className="flex h-full w-full justify-center bg-azul-b3 opacity-80 items-center">
+        <div className="flex h-full w-full justify-center bg-azul-b3/80 items-center">
             <div className="flex border justify-center  bg-white rounded w-2/3 h-3/4">
                 <div className="flex flex-col h-full justify-around items-center">
 

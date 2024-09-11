@@ -12,6 +12,7 @@ import ChatPage from './pages/ChatPage.tsx';
 import QuizPerguntasPage from './pages/QuizPerguntasPage.tsx';
 import QuizIniciarPage from './pages/QuizIniciarPage.tsx';
 import LandingPage from './pages/LandingPage.tsx';
+import ResultadoQuizPage from './pages/ResultadoQuizPage.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
     path : "quiz/iniciar",
     element: <QuizIniciarPage/>
   },
+  {
+    path : "quiz/resultado",
+    element: <ResultadoQuizPage/>
+
+  }
   
  
 ]);

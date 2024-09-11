@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import LogoB3 from './LogoB3';
+
 
 interface Message {
   role: 'user' | 'assistant';
@@ -73,7 +73,7 @@ export default function ChatComponent() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-5 bg-azul-b3 opacity-80 shadow-md">
+    <div className="flex flex-col w-full h-full p-5 bg-azul-b3/80 shadow-md">
       {showQuestions && (
         <div>
         <div className='flex justify-end items-center'>
