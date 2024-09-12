@@ -30,26 +30,28 @@ export default function ChatComponent() {
     setMessages([...messages, newUserMessage]);
     setInput('');
     setIsLoading(true);
+    console.log(newUserMessage.content);
 
     try {
-      const response = await fetch('https://carro-amigo-backend-production.up.railway.app/chat/query', {
+      const response = await fetch('http://3.84.232.204:5000/prompt', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ messages: [...messages, newUserMessage] }),
+        body: JSON.stringify({ prompt: newUserMessage.content }),
       });
       const data = await response.json();
+      console.log(data);
       setIsLoading(false);
-      if (data.choices && data.choices.length > 0 && data.choices[0].message) {
+      if (data.response) {
         setIsTyping(true);
         setTimeout(() => {
           setMessages((prevMessages) => [
             ...prevMessages,
-            { role: 'assistant', content: data.choices[0].message.content },
+            { role: 'assistant', content: data.response },
           ]);
           setIsTyping(false);
-        }, 1000);
+        }, 10000);
       } else {
         setMessages((prevMessages) => [
           ...prevMessages,
