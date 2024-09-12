@@ -38,8 +38,29 @@ export default function LoginPage() {
     birth_date: null, 
   });
 
-  async function login(token: string) {
-    cookies.set("jwt_authorization", token);
+  async function login(email: string, senha: string) {
+    const response = await fetch("http://127.0.0.1:5000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "credentials": "include",
+      },
+      body: JSON.stringify({
+        username: email,
+        password: senha,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      cookies.set("jwt_authorization", data.access_token, { path: "/" });
+    } else {
+      console.error("Falha na requisição:", response.status, response.statusText);
+      setError("Erro ao fazer login. Verifique suas credenciais.");
+      return null;
+    }
+    
     navigate("/chat");
   }
 
@@ -49,25 +70,22 @@ export default function LoginPage() {
       return;
     }
 
-    const response = await fetch("http://54.71.150.144:8082/login", {
+    const response = await fetch("http://127.0.0.1:5000/auth/register", {
       method: "POST",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "credentials": "include",
       },
       body: JSON.stringify({
-        email: email,
+        username: email,
         password: senha,
       }),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return login(data.token);
-    } else {
-      console.error("Falha na requisição:", response.status, response.statusText);
-      setError("Erro ao fazer login. Verifique suas credenciais.");
-      return null;
-    }
+
+    
+
+    
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +160,7 @@ export default function LoginPage() {
               <div className="flex flex-col gap-2 mx-8 ">
               <div className="flex flex-col gap-1">
               <h3 className="text-neutral-300 text-base font-normal ">Nome</h3>
-              <input type="text" placeholder="Nome" required  className="rounded-lg pl-2  focus:border-transparent focus:outline-none py-2"/>
+              <input onChange={(e) => setEmailCadastro(e.target.value)} type="text" placeholder="Nome" required  className="rounded-lg pl-2  focus:border-transparent focus:outline-none py-2"/>
               </div>
               <div className="flex flex-col gap-1">
               <h3 className="text-neutral-300 text-base font-normal">Email</h3>
@@ -150,7 +168,7 @@ export default function LoginPage() {
               </div>
               <div className="flex flex-col gap-1">
               <h3 className="text-neutral-300 text-base font-normal ">Senha</h3>
-              <input type="password" required  className="rounded-lg pl-2 focus:border-transparent focus:outline-none py-2"/>
+              <input type="password" onChange={(e) => setSenhaCadastro(e.target.value)} required  className="rounded-lg pl-2 focus:border-transparent focus:outline-none py-2"/>
               </div>
               <div className="flex flex-col gap-1">
               <h3 className="text-neutral-300 text-base font-normal">Confirme sua senha</h3>
@@ -167,7 +185,7 @@ export default function LoginPage() {
                 <p className="text-neutral-300 text-base font-normal">Lembrar-me</p>
 
               </div>
-              <button className="bg-amarelo-b3 py-2 rounded-md mt-6">
+              <button onClick={() => PostUsuario(emailCadastro, senhaCadastro)} className="bg-amarelo-b3 py-2 rounded-md mt-6">
                 Sign Up
               </button>
               <div className="flex flex-row gap-2 justify-center">
@@ -190,13 +208,13 @@ export default function LoginPage() {
                 <div className="flex flex-col gap-1">
 
               <h3 className="text-neutral-300 text-base font-normal">Email</h3>
-              <input type="text" placeholder="abc@example.com" required  className="rounded-md pl-2  focus:border-transparent focus:outline-none py-2"/>
+              <input onChange={(e) => setEmailLogin(e.target.value)} type="text" placeholder="abc@example.com" required  className="rounded-md pl-2  focus:border-transparent focus:outline-none py-2"/>
               </div>
               <div className="flex flex-col gap-1">
               <h3 className="text-neutral-300 text-base font-normal">Senha</h3>
-              <input type="password" required  className="rounded-md pl-2 focus:border-transparent focus:outline-none py-2"/>
+              <input onChange={(e) => setSenhaLogin(e.target.value)} type="password" required  className="rounded-md pl-2 focus:border-transparent focus:outline-none py-2"/>
               </div>
-              <button onClick={() => login("oi")} className="bg-amarelo-b3 py-2 rounded-md mt-6">
+              <button onClick={() => login(emailLogin,senhaLogin)} className="bg-amarelo-b3 py-2 rounded-md mt-6">
                 Login
               </button>
               <div className="flex flex-row my-5 items-center gap-2 justify-center">
